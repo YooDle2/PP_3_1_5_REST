@@ -1,11 +1,78 @@
+<!--
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example</title>
+    <title>User Page</title>
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
-
-
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>E-mail</th>
+        <th>Roles</th>
+    </tr>
+    <tr>
+        <td th:text="${user.id}">ID</td>
+        <td th:text="${user.getUsername()}">USERNAME</td>
+        <td th:text="${user.getPassword()}">PASSWORD</td>
+        <td th:text="${user.getName()}">NAME</td>
+        <td th:text="${user.getSurname()}">SURNAME</td>
+        <td th:text="${user.getEmail()}">EMAIL</td>
+        <td th:text="${user.getRoles()}">ROLES</td>
+    </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br>
+&lt;!&ndash;    <h4>Authorization page: </h4>&ndash;&gt;
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:c="http://java.sun.com/xml/ns/javaee">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+</head>
+<body>
+<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Your page</h1>
+<table border="1" cellpadding="7">
+    <tr>
+        <th> Id</th>
+        <th> Username</th>
+        <th> Name</th>
+        <th> Surname</th>
+        <th> Email</th>
+        <th> Roles</th>
+    </tr>
+    <tr>
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getUsername()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+        <td th:utext="${user.getEmail()}"></td>
+        <td th:each="role : ${roles}">
+            <p th:text="${role.getRole()}"></p></td>
+    </tr>
+</table>
+<br>
+<hr>
+<h4>Authorization page: </h4>
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
 </body>
 </html>

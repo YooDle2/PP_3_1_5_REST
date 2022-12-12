@@ -1,0 +1,120 @@
+<!--
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+</head>
+<body>
+<h1>Table of All Users</h1>
+<table border="1" cellpadding="7">
+    <tr>
+        <th> Id</th>
+        <th> Username</th>
+        <th> Password</th>
+        <th> Name</th>
+        <th> Surname</th>
+        <th> Email</th>
+        <th> Update User</th>
+        <th> Delete User</th>
+    </tr>
+    <tr>
+    <tr th:each="user : ${allUsers}">
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getUsername()}"></td>
+        <td th:utext="${user.getPassword()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+        <td th:utext="${user.getEmail()}"></td>
+        <td>
+            <button><a th:href="@{/admin/edit/{id}(id=${user.getId()})}">Update</a></button>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+<hr/>
+&lt;!&ndash;<h4>My Information :</h4>&ndash;&gt;
+<button>
+    <a th:href="@{/user}">My Information</a>
+</button>
+<br>
+<br>
+&lt;!&ndash;<h4>Add User :</h4>&ndash;&gt;
+<button>
+    <a th:href="@{/admin/new}">Add User</a>
+</button>
+&lt;!&ndash;<input type="button" value="Add" onclick="window.location.href='admin/new'"/>&ndash;&gt;
+<br>
+<br>
+&lt;!&ndash;<h4>Authorization page :</h4>&ndash;&gt;
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:c="http://java.sun.com/xml/ns/javaee">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+</head>
+<body>
+<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Table of All Users
+</h1>
+<table border="1" cellpadding="7">
+    <tr>
+        <th> Id</th>
+        <th> Username</th>
+        <th> Name</th>
+        <th> Surname</th>
+        <th> Email</th>
+        <th> Password</th>
+        <th> Update User</th>
+        <th> Delete User</th>
+    </tr>
+    <tr>
+    <tr th:each="user : ${allUsers}">
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getUsername()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+        <td th:utext="${user.getEmail()}"></td>
+        <td th:utext="${user.getPassword()}"></td>
+        <td>
+            <button><a th:href="@{/admin/edit/{id}(id=${user.getId()})}">Update</a></button>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+<hr>
+<h4>My Information :</h4>
+<button>
+    <a th:href="@{/user}">Info</a>
+</button>
+<br>
+<h4>Add User :</h4>
+<input type="button" value="Add" onclick="window.location.href='admin/new'"/>
+<br>
+<h4>Authorization page :</h4>
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
+<br>
+</body>
+</html>

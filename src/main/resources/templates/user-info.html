@@ -1,0 +1,85 @@
+<!--
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+    <p>
+        <label for="username">User Name:</label>
+        <input type="text" th:field="*{username}" id="username">
+    </p>
+    <p>
+        <label for="password">Password:</label>
+        <input type="text" th:field="*{password}" id="password">
+    </p>
+    <p>
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+    </p>
+    <p>
+        <label for="surname">Surname:</label>
+        <input type="text" th:field="*{surname}" id="surname">
+    </p>
+    <p>
+        <label for="email">Email:</label>
+        <input type="text" th:field="*{email}" id="email">
+    </p>
+    <p>
+        <input type="checkbox" name="roles" value="ROLE_USER"/> USER
+        <input type="checkbox" name="roles" value="ROLE_ADMIN"/> ADMIN
+        <input type="submit" value="OK"/>
+    </p>
+</form>
+<hr/>
+<h4>Authorization page :</h4>
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+    <p>
+        <label for="username">User Name:</label>
+        <input type="text" th:field="*{username}" id="username">
+    </p>
+    <p>
+        <label for="password">Password:</label>
+        <input type="text" th:field="*{password}" id="password">
+    </p>
+    <p>
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+    </p>
+    <p>
+        <label for="lastName">Last name:</label>
+        <input type="text" th:field="*{surname}" id="lastName">
+    </p>
+    <p>
+        <label for="email">Email:</label>
+        <input type="text" th:field="*{email}" id="email">
+    </p>
+    <p>
+        <input type="checkbox" name="roles" value="ROLE_USER"/> USER
+        <input type="checkbox" name="roles" value="ROLE_ADMIN"/> ADMIN
+        <input type="submit" value="OK"/>
+    </p>
+</form>
+<hr>
+<h4>Authorization page :</h4>
+<button>
+    <a th:href="@{/logout}">Logout</a>
+</button>
+</body>
+</html>
