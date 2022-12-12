@@ -38,17 +38,13 @@
 </body>
 </html>-->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:c="http://java.sun.com/xml/ns/javaee">
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User Page</title>
 </head>
 <body>
-<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    Your page</h1>
+<h1>Your page</h1>
 <table border="1" cellpadding="7">
     <tr>
         <th> Id</th>
@@ -64,13 +60,14 @@
         <td th:utext="${user.getName()}"></td>
         <td th:utext="${user.getSurname()}"></td>
         <td th:utext="${user.getEmail()}"></td>
-        <td th:each="role : ${roles}">
-            <p th:text="${role.getRole()}"></p></td>
+        <td th:utext="${user.getRoles()}"></td>
     </tr>
 </table>
 <br>
 <hr>
-<h4>Authorization page: </h4>
+<button>
+    <a th:href="@{/admin}">Admin page</a>
+</button>
 <button>
     <a th:href="@{/logout}">Logout</a>
 </button>

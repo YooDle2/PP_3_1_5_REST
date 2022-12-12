@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -9,22 +11,21 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
 
+    @Autowired
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-//        List<User> allUsers = userService.listUsers();
+    public String showAllUsers(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
         model.addAttribute("allUsers", userService.listUsers());
         return "admin";
     }
@@ -33,10 +34,10 @@ public class AdminController {
     public String addNewUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("role", roleService.listRole());
-        return "user-info";
+        return "newUser";
     }
 
-    @PostMapping("/new")
+    @PutMapping("/new")
     public String addNewUser(@ModelAttribute User user, @RequestParam("roles") String[] role) throws NotFoundException {
         user.setRoles(roleService.getRoles(role));
         userService.update(user);
@@ -50,7 +51,7 @@ public class AdminController {
         return "edit";
     }
 
-    @PutMapping("/edit/{id}")
+    @PatchMapping("/edit/{id}")
     public String editUser(@ModelAttribute User user, @RequestParam("roles") String[] role) throws NotFoundException {
         user.setRoles(roleService.getRoles(role));
         userService.update(user);
