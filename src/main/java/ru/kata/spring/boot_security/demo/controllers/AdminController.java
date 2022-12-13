@@ -38,7 +38,7 @@ public class AdminController {
     }
 
     @PutMapping("/new")
-    public String addNewUser(@ModelAttribute User user, @RequestParam("roles") String[] role) throws NotFoundException {
+    public String addNewUser(@ModelAttribute User user, @RequestParam("userRoles") String[] role) throws NotFoundException {
         user.setRoles(roleService.getRoles(role));
         userService.update(user);
         return "redirect:/admin";
@@ -52,7 +52,7 @@ public class AdminController {
     }
 
     @PatchMapping("/edit/{id}")
-    public String editUser(@ModelAttribute User user, @RequestParam("roles") String[] role) throws NotFoundException {
+    public String editUser(@ModelAttribute User user, @RequestParam("userRoles") String[] role) throws NotFoundException {
         user.setRoles(roleService.getRoles(role));
         userService.update(user);
         return "redirect:/admin";

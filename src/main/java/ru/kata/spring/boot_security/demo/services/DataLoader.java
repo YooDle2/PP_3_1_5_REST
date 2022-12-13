@@ -30,13 +30,19 @@ public class DataLoader {
 
         User user1 = new User
                 ( "admin", "admin","Admin", "Adminov","admin@mail");
-        user1.setRoles(Set.of(role1, role2));
+//        user1.setRoles(Set.of(role1, role2));
+        Set<Role> roles1 = new HashSet<>();
+        roles1.add(role1);
+        roles1.add(role2);
+        user1.setRoles(roles1);
         userService.saveUser(user1);
 
         User user2 = new User
                 ( "user", "user","User", "Userov","user@mail");
+//        user2.setRoles(Set.of(role2));
         Set<Role> roles2 = new HashSet<>();
-        user2.setRoles(Set.of(role2));
+        roles2.add(role2);
+        user2.setRoles(roles2);
         userService.saveUser(user2);
 
         /*User user3 = new User
