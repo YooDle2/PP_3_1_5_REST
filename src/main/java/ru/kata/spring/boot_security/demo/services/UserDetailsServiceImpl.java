@@ -21,10 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userService.getByUsername(username);
+            user = userService.getByEmail(email);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
