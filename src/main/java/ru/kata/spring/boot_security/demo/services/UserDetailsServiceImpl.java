@@ -20,17 +20,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userService.getByEmail(email);
+            user = userService.getByEmail(name);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
-
         if (user == null) {
-            throw new UsernameNotFoundException("Такого имени пользователя не существует");
+            throw new UsernameNotFoundException(String.format("User '%s' not found", name));
         }
         return user;
     }

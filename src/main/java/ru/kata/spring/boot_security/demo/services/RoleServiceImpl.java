@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+
     private final RoleRepository roleRepository;
 
     public RoleServiceImpl(RoleRepository roleRepository) {
@@ -19,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> listRole() {
+    public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
@@ -34,29 +35,24 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getById(int id) {
-        Role role = null;
-        Optional<Role> optionalRole = roleRepository.findById(id);
-        if (optionalRole.isPresent()) {
-            role = optionalRole.get();
+    public Role getById(long id) {
+        return roleRepository.getById(id);
+    }
+
+    @Override
+    public Role getByName(String roleName) throws NotFoundException {
+        Role role = roleRepository.findByName(roleName);
+        if (role == null) {
+            throw new NotFoundException(roleName);
         }
         return role;
     }
 
     @Override
-    public Role getByRole(String role) throws NotFoundException {
-        Role role1 = roleRepository.findByRole(role);
-        if (role1 == null) {
-            throw new NotFoundException(role);
-        }
-        return role1;
-    }
-
-    @Override
-    public Set<Role> getRoles(String[] role) throws NotFoundException {
+    public Set<Role> getRoleSet(String[] role) throws NotFoundException {
         Set<Role> roleSet = new HashSet<>();
         for (String roles : role) {
-            roleSet.add(getByRole(roles));
+            roleSet.add(getByName(roles));
         }
         return roleSet;
     }

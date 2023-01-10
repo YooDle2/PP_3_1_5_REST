@@ -1,66 +1,56 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import javassist.NotFoundException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.configs.MyPasswordEncoder;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final MyPasswordEncoder myPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder) {
         this.userRepository = userRepository;
-    }
-
-    @Bean
-    private BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+        this.myPasswordEncoder = myPasswordEncoder;
     }
 
     @Override
-    public List<User> listUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
     public void saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(myPasswordEncoder.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public User getById(int id) {
-        return userRepository.findById(id).orElseThrow();
+    public User getById(long id) {
+        return userRepository.getById(id);
     }
 
     @Override
     public void update(User user) {
-        if (user.getPassword().isEmpty()) {
-            user.setPassword(userRepository.findByUsername(user.getUsername()).getPassword());
-        } else {
-            user.setPassword(bCryptPasswordEncoder().encode(user.getPassword()));
-        }
+        user.setPassword(myPasswordEncoder.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public void delete(int id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        optionalUser.ifPresent(userRepository::delete);
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 
     @Override
-    public User getByUsername(String username) throws NotFoundException {
-        User user = userRepository.findByUsername(username);
+    public User getByName(String userName) throws NotFoundException {
+        User user = userRepository.findByUsername(userName);
         if (user == null) {
-            throw new NotFoundException(username);
+            throw new NotFoundException(userName);
         }
         return user;
     }

@@ -1,30 +1,32 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
+@NoArgsConstructor
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
-    public String password;
-
-    @Column(name = "name")
-    private String name;
+    private String password;
 
     @Column(name = "surname")
     private String surname;
@@ -32,99 +34,17 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
-    public User() {
-    }
-
-    public User(int id, String username, String password, String name, String surname, String email, Set<Role> roles) {
-        this.id = id;
+    public User(String username, String surname, String password, String email) {
         this.username = username;
-        this.password = password;
-        this.name = name;
         this.surname = surname;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public User(String username, String password, String name, String surname, String email, Set<Role> roles) {
-        this.username = username;
         this.password = password;
-        this.name = name;
-        this.surname = surname;
         this.email = email;
-        this.roles = roles;
-    }
-
-    public User(String username, String password, String name, String surname, String email) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -133,27 +53,37 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonIgnore
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    @JsonIgnore
     @Override
-    public String toString() {
-        return username;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 }

@@ -7,17 +7,18 @@ import ru.kata.spring.boot_security.demo.models.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> listUsers();
+
+    List<User> getAllUsers();
 
     void saveUser(User user);
 
-    User getById(int id);
+    User getById(long id);
 
     void update(User user);
 
-    void delete(int id);
+    void delete(User user);
 
-    User getByUsername(String username) throws NotFoundException;
+    User getByName(String userName) throws NotFoundException;
 
     User getByEmail(String email) throws NotFoundException;
 }

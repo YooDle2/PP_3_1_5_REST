@@ -2,8 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mirzaev
-#    ?serverTimezone=Europe/Moscow
+    url: jdbc:mysql://localhost:3306/mirzaev?serverTimezone=Europe/Moscow
 #    mirzaev?verifyServerCertificate=false&useSSL=false&requireSSL=false&useLegacyDatetimeCode=false&amp&serverTimezone=UTC
     username: root
     password: root
@@ -13,7 +12,7 @@ spring:
       hibernate:
         show_sql: true
         dialect:  org.hibernate.dialect.MySQL5Dialect
-        hbm2ddl.auto: create-drop
+        hbm2ddl.auto: create
   # hiddenHttpMethodFilter properties
   mvc:
     hiddenmethod:
